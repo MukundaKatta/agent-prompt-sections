@@ -185,12 +185,18 @@ class AgentPromptSections:
         original relative order.
 
         Args:
-            names: Partial or full ordered list of section names.
+            names: Partial or full ordered list of section names.  Each name
+                   may appear at most once.
 
         Raises:
-            SectionError: If any name in *names* is unknown.
+            SectionError: If any name in *names* is unknown or appears more
+                          than once.
         """
+        seen: set[str] = set()
         for n in names:
+            if n in seen:
+                raise SectionError(f"Duplicate section name {n!r} in reorder")
+            seen.add(n)
             self._require(n)
         leading = [self._find(n) for n in names]
         rest = [s for s in self._sections if s.name not in names]
