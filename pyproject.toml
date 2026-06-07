@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "agent-prompt-sections"
-version = "0.1.0"
+version = "0.1.1"
 description = "Compose LLM system prompts from ordered named sections"
 readme = "README.md"
 license = { file = "LICENSE" }
@@ -20,11 +20,15 @@ classifiers = [
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
     "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
     "Topic :: Software Development :: Libraries",
+    "Typing :: Typed",
 ]
 
 [project.optional-dependencies]
-dev = ["pytest>=7", "ruff>=0.4"]
+# Tests run on the standard-library ``unittest`` runner and need no extra
+# dependencies; ``ruff`` is only used for linting/formatting in CI.
+dev = ["ruff>=0.4"]
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/agent_prompt_sections"]
