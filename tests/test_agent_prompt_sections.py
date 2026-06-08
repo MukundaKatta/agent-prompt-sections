@@ -280,6 +280,15 @@ def test_reorder_unknown_raises():
         p.reorder(["a", "unknown"])
 
 
+def test_reorder_duplicate_raises():
+    p = AgentPromptSections()
+    p.add("a", "A").add("b", "B")
+    with pytest.raises(SectionError, match="Duplicate"):
+        p.reorder(["a", "a"])
+    # State must remain consistent (no duplicated section).
+    assert p.names() == ["a", "b"]
+
+
 # ---------------------------------------------------------------------------
 # clear
 # ---------------------------------------------------------------------------
